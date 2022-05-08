@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AP2_Chat_DotNet_WebAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20220508142352_init")]
+    [Migration("20220508180834_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,41 +20,22 @@ namespace AP2_Chat_DotNet_WebAPI.Migrations
                 .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("AP2_Chat_DotNet_WebAPI.Models.ApiMessage", b =>
+            modelBuilder.Entity("AP2_Chat_DotNet_WebAPI.Models.Contact", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("primaryKey")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("content")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("created")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("from")
-                        .HasColumnType("longtext");
-
-                    b.Property<bool>("sent")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("to")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("id");
-
-                    b.ToTable("ApiMessages");
-                });
-
-            modelBuilder.Entity("AP2_Chat_DotNet_WebAPI.Models.ApiUser", b =>
-                {
-                    b.Property<string>("id")
+                    b.Property<string>("Userid")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<string>("id")
+                        .HasColumnType("longtext");
 
                     b.Property<string>("last")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("lastDate")
+                    b.Property<string>("lastdate")
                         .HasColumnType("longtext");
 
                     b.Property<string>("name")
@@ -63,9 +44,11 @@ namespace AP2_Chat_DotNet_WebAPI.Migrations
                     b.Property<string>("server")
                         .HasColumnType("longtext");
 
-                    b.HasKey("id");
+                    b.HasKey("primaryKey");
 
-                    b.ToTable("ApiUsers");
+                    b.HasIndex("Userid");
+
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("AP2_Chat_DotNet_WebAPI.Models.Message", b =>
@@ -77,22 +60,7 @@ namespace AP2_Chat_DotNet_WebAPI.Migrations
                     b.Property<string>("content")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("date")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("direction")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("from")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("time")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("to")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("type")
+                    b.Property<string>("created")
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
@@ -102,24 +70,33 @@ namespace AP2_Chat_DotNet_WebAPI.Migrations
 
             modelBuilder.Entity("AP2_Chat_DotNet_WebAPI.Models.User", b =>
                 {
-                    b.Property<string>("username")
+                    b.Property<string>("id")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("contacts")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("displayName")
+                    b.Property<string>("name")
                         .HasColumnType("longtext");
 
                     b.Property<string>("password")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("profileImage")
+                    b.Property<string>("server")
                         .HasColumnType("longtext");
 
-                    b.HasKey("username");
+                    b.HasKey("id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("AP2_Chat_DotNet_WebAPI.Models.Contact", b =>
+                {
+                    b.HasOne("AP2_Chat_DotNet_WebAPI.Models.User", null)
+                        .WithMany("contacts")
+                        .HasForeignKey("Userid");
+                });
+
+            modelBuilder.Entity("AP2_Chat_DotNet_WebAPI.Models.User", b =>
+                {
+                    b.Navigation("contacts");
                 });
 #pragma warning restore 612, 618
         }

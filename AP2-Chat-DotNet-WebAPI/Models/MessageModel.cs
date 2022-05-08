@@ -23,15 +23,5 @@ namespace AP2_Chat_DotNet_WebAPI.Models
                 return message;
             }
         }
-        public List<Message> getMessageByFrom(string from)
-        {
-            using (var db = new MyDbContext())
-            {
-                IQueryable<Message> messages = db.Messages.Where(message => message.from == from);
-                List<Message> messagesList = messages.ToList();
-                return messagesList;
-            }
-
-        }
     }
 }

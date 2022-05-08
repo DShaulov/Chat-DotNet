@@ -6,10 +6,11 @@ import hardcodedMessages from './HardcodedMessages';
 import hardcodedUsers from './HardcodedUsers';
 
 function App() {
-    const [ currentUser, setCurrentUser ] = useState("");
-    const [ users, updateUsers ] = useState({});
+    const [currentUser, setCurrentUser] = useState("");
+    const [token, setToken] = useState("");
+    const [users, updateUsers] = useState(hardcodedUsers);
     const [ messages, updateMessages ] = useState(hardcodedMessages);
-    useEffect(() => {
+    /*useEffect(() => {
         let allUsers = {};
         fetchUsers(allUsers);
         console.log(allUsers);
@@ -28,7 +29,7 @@ function App() {
                 }
             })
         });
-    }
+    }*/
     /**
      * Checks whether or not a username is already taken
      */
@@ -60,18 +61,9 @@ function App() {
         }
         return false;
     };
-    /**
-     * Check if provided password and username match
-     */
-    function isUserValid(username, password) {
-        if (users[username].password === password) {
-            return true;
-        }
-        return false;
-    }
     const loginFunctions = {
-        isUserValid: isUserValid,
         setCurrentUser: setCurrentUser,
+        setToken: setToken
     };
     const registerFunctions = {
         isUsernameTaken: isUsernameTaken,

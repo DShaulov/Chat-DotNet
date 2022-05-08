@@ -13,21 +13,12 @@
         }
 
         // Get Item
-        public User? getUser(string username)
+        public User? getUser(string id)
         {
             using (var db = new MyDbContext())
             {
-                User? user= db.Users.Find(username);
+                User? user= db.Users.Find(id);
                 return user;
-            }
-        }
-
-        public List<User> getAllUsers()
-        {
-            using (var db = new MyDbContext())
-            {
-                var users = db.Users.ToList();
-                return users;
             }
         }
     }

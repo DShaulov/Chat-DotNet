@@ -5,23 +5,23 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AP2_Chat_DotNet_WebAPI.Models;
-
+using System.Net;
 
 namespace AP2_Chat_DotNet_WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UserAuthController : ControllerBase
     {
         public IConfiguration _configuration;
-        public UsersController(IConfiguration config)
+        public UserAuthController(IConfiguration config)
         {
             _configuration = config;
         }
         [HttpPost]
         public IActionResult Post(string username, string password)
         {
-            if (true)
+            if (authUser(username, password))
             {
                 var claims = new[]
                 {
@@ -40,6 +40,32 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
                     signingCredentials: mac);
                 return Ok(new JwtSecurityTokenHandler().WriteToken(token));
             }
+            else
+            {
+                return Content("Invalid");
+            }
+
+            bool authUser(string username, string password)
+            {
+                UserModel userModel = new UserModel();
+                User? user = userModel.getUser(username);
+                if (user != null)
+                {
+                    if (user.password == password)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
+        
     }
 }

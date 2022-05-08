@@ -4,11 +4,16 @@ namespace AP2_Chat_DotNet_WebAPI.Models
 {
     public class User
     {
-        public string? username { get; set; }
+        public User()
+        {
+            contacts = new List<Contact>();
+        }
+        public string? id { get; set; }
         public string? password { get; set; }
-        public string? displayName { get; set; }
-        public string? contacts { get; set; }
-        public string? profileImage { get; set; }
+        public string? name { get; set; }
+        public string? server { get; set; }
+
+        public List<Contact>? contacts { get; set; }
 
     }
 }

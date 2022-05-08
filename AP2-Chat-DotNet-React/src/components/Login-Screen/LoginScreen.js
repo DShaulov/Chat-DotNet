@@ -2,6 +2,7 @@ import './Styles/LoginScreen.css';
 import { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import $ from 'jquery';
 
 function LoginScreen(props) {
     const [usernameNotFilled, setUsernameNotFilled] = useState(false);
@@ -32,15 +33,20 @@ function LoginScreen(props) {
             setUserNotValid(false);
             return;
         }
-        if (props.functions.isUserValid(username, password)) {
+        var token;
+        // Make POST request to server to login
+        fetch(`/userauth?username=${username}&password=${password}`, {
+            method: "POST"
+        })
+            .then(data => data.text())
+            .then(text => { token = text });
+        if (token == "Invalid") {
+            setUserNotValid(true);
+        }
+        else {
             props.functions.setCurrentUser(username);
             props.functions.setLoggedIn(true);
-            if (userNotValid) {
-                setUserNotValid(false)
-            };
-            return;
-        } else {
-            setUserNotValid(true);
+            props.functions.setToken(token);
         }
     }
     return (

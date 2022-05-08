@@ -1,24 +1,23 @@
 ﻿namespace AP2_Chat_DotNet_WebAPI.Models
 {
-    public class ApiMessageModel
+    public class ContactModel
     {
         // Add Item
-        public void addApiMessage(ApiMessage apiMessage)
+        public void addContact(Contact contact)
         {
             using (var db = new MyDbContext())
             {
-                db.ApiMessages.Add(apiMessage);
+                db.Contacts.Add(contact);
                 db.SaveChanges();
             }
         }
-
         // Get Item
-        public ApiMessage? getApiMessage(int messageId)
+        public Contact getContact(string id)
         {
             using (var db = new MyDbContext())
             {
-                ApiMessage? item = db.ApiMessages.Find(messageId); 
-                return item;
+                Contact contact = db.Contacts.Find(id);
+                return contact;
             }
         }
     }
