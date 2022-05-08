@@ -1,0 +1,143 @@
+.Contact-Display-div {
+    display: flex;
+    flex-direction: column;
+    height:100%;
+}
+.Contact-Display-div__navbar {
+    display: flex;
+    flex-direction: row;
+    height:6%;
+    width:100%;
+    background: rgb(25,118,210);
+    box-shadow: 0px 3px 5px black;
+    font-family: copperplate;
+    color: azure;
+}
+.Contact-Display-div__navbar__img-div {
+    width: 10%;
+    height: 100%;
+}
+.list-icon {
+    cursor: pointer;
+    margin-top: 10%;
+}
+.Contact-Display-div__navbar__img-div__img {
+    margin-top:8%;
+    height:55px;
+    width:55px;
+    background-color: azure;
+    border-radius: 50%;
+}
+.Contact-Display-div__navbar__img-div__img-small {
+    margin-top:10%;
+    height:40px;
+    width:40px;
+    background-color: azure;
+    border-radius: 50%;
+}
+.Contact-Display-div__navbar__username-div {
+    width:70%;
+    height:100%;
+    text-align: left;
+}
+.Contact-Display-div__navbar__username-div__header {
+    margin-top: 1%;
+    margin-left: 10%;
+}
+.Contact-Display-div__navbar__username-div-small {
+    width:70%;
+    height:100%;
+    text-align: center;
+}
+.Contact-Display-div__navbar__username-div-small__header {
+    margin-top: 2%;
+}
+.Contact-Display-div__options-div__add-contact {
+    margin-top: 2%;
+    border-bottom: 1px solid black;
+}
+.Contact-Display-div__navbar__options-menu-div{
+    width:20%;
+    display: flex;
+    justify-content: left;
+}
+.Contact-Display-div__contacts-div {
+    max-height: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+}
+.list-card-div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.list-card-div__contact-name-last-message-div {
+
+}
+.list-card-div__contact-name-div__last-message-div__last-message {
+    overflow: hidden;
+}
+.list-card-div__profile-image-div__img {
+    margin-top:8%;
+    height:75px;
+    width:75px;
+    background-color: azure;
+    border-radius: 50%;
+}
+.list-card-div__contact-name-div__name-title-div__name-title {
+    text-align: left;
+}
+.list-card-div__contact-name-div {
+    margin-left: 3%;
+    width: 80%;
+}
+.list-card-div__contact-name-div__last-message-div__last-message {
+    text-align: left;
+    width:80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.modal__form__add-btn-grp {
+    margin-top: 4%;
+    display: flex;
+    justify-content: center;
+}   
+.warning-text {
+    display: flex;
+    justify-content: center;
+    color: red;
+}
+.custom-navbar {
+    flex-basis: 8%;
+    box-shadow: 2px 0.5px 1px black;
+}
+.custom-navbar__image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.custom-navbar__brand {
+    margin-left: 2%;
+    width: 30%;
+    text-align:center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+.last-message-div {
+    display: flex;
+    flex-direction: row;
+}
+.last-message-paragraph {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 2%;
+}
+.last-message-icon {
+    margin-top: auto;
+    margin-bottom: auto;
+} 

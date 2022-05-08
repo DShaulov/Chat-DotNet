@@ -1,0 +1,33 @@
+.register-screen-div {
+    display: flex;
+    flex-basis: 90%;
+    flex-direction: column;
+}
+.register-screen-div__form__input-div  {
+    display: flex;
+    flex-direction: column;
+}
+.register-screen-div__form {
+    margin-top: 5%;
+    width: 70%;
+    margin-left: 15%;
+}
+.register-screen-div__form__warning-text {
+    margin-top: 1%;
+    color: red;
+}
+.register-screen-div__form__register-btn {
+    margin-top: 1%;
+}
+.register-screen-div__form__username-grp {
+    margin-top: 1%;
+}
+.register-screen-div__form__password-grp {
+    margin-top: 1%;
+}
+.register-screen-div__form__nickname-grp {
+    margin-top: 1%;
+}
+.register-screen-div__register-link-paragraph {
+    margin-top: 1%;
+}

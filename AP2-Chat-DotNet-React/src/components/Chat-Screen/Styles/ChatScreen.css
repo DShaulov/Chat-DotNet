@@ -1,0 +1,24 @@
+.ChatScreen-div {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+.ChatScreen-div__ContactDisplay-div {
+    display: flex;  
+    flex-direction: column;
+    width: 30%;
+    height: 100%;
+    border-right: 1px solid black;
+}
+.ChatScreen-div__MessageDisplay-div {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 100%;
+    background-color: beige;
+}
+
+.Test {
+    color: red;
+}
