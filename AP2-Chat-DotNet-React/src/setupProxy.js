@@ -2,7 +2,6 @@
 
 const context = [
     "/api",
-    "/rank",
     "/db",
     "/userauth",
     "/userregister"
