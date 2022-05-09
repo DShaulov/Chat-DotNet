@@ -4,7 +4,6 @@ const context = [
     "/api",
     "/db",
     "/userauth",
-    "/userregister"
 ];
 
 module.exports = function (app) {

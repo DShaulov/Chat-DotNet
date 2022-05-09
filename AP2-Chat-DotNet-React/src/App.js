@@ -45,7 +45,7 @@ function App() {
      * TODO
      * Adds user to users database
      */
-    function addUser(username, password, nickname) {
+    /*function addUser(username, password, nickname) {
         if (!isUsernameTaken(username)){
             let updatedUsers = {...users};
             updatedUsers[username] = {
@@ -60,15 +60,15 @@ function App() {
             updateMessages(updatedMessages);
         }
         return false;
-    };
+    };*/
     const loginFunctions = {
         setCurrentUser: setCurrentUser,
         setToken: setToken
     };
     const registerFunctions = {
         isUsernameTaken: isUsernameTaken,
-        addUser: addUser,
-        setCurrentUser: setCurrentUser
+        setCurrentUser: setCurrentUser,
+        setToken: setToken
     };
     const chatFunctions = {
         updateUsers: updateUsers,

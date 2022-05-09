@@ -14,6 +14,8 @@ function RegisterScreen(props) {
     const [passwordsDontMatch, setPasswordsDontMatch] = useState(false);
     const [usernameTaken, setUsernameTaken] = useState(false);
 
+    const [failedToRegister, setFailedToRegister] = useState(false);
+
     function stringHasNumber(string) {
         return /\d/.test(string);
     }
@@ -79,17 +81,59 @@ function RegisterScreen(props) {
             if (passwordsDontMatch) {setPasswordsDontMatch(false)};
         }
 
-        if (props.functions.isUsernameTaken(username)) {
+        if (isUsernameTaken(username)) {
             setUsernameTaken(true);
             return;
         }
          else {
             if (usernameTaken) {setUsernameTaken(false)};
         }
-        props.functions.setCurrentUser(username);
-        props.functions.addUser(username, password, nickname);
+        // Make POST request to server to register
+        register(username, password, nickname);
+        logIn(username, password);
+
+        /*props.functions.setCurrentUser(username);
         props.functions.setLoggedIn(true);
+        props.functions.setToken(token);*/
+
+
+        /*props.functions.setCurrentUser(username);
+        props.functions.addUser(username, password, nickname);
+        props.functions.setLoggedIn(true);*/
         return;
+    }
+    async function isUsernameTaken(username) {
+        var response;
+        await fetch(`/api/usertaken?id=${username}`, {
+            method: "POST"
+        })
+            .then(data => data.text())
+            .then(text => { response = text });
+        if (response == "TAKEN") {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    async function register(username, password, nickname) {
+        await fetch(`/api/userregister?id=${username}&password=${password}&name=${nickname}&server=${"localhost:7201"}`, {
+            method: "POST"
+        })
+            .then(data => data.text())
+            .then(text => {
+                if (text != "OK") {
+                    setFailedToRegister(true);
+                    return;
+                };
+            });
+    }
+    async function logIn(username, password, token) {
+        await fetch(`/userauth?username=${username}&password=${password}`, {
+            method: "POST"
+        })
+            .then(data => data.text())
+            .then(text => { token = text });
     }
     return (
         <div className="register-screen-div">
@@ -142,6 +186,10 @@ function RegisterScreen(props) {
                 <Form.Group className="register-screen-div__form__btn-link-grp">
                     <Button variant="primary" type="submit" className="register-screen-div__form__register-btn">Register</Button>
                 </Form.Group>
+                {
+                    failedToRegister &&
+                    <Form.Text className="register-screen-div__form__warning-text">*Failed to register, please try again</Form.Text>
+                }
             </Form>
             <p className="register-screen-div__register-link-paragraph">Already registered?  <Link to='/'>Click here</Link> to login.</p>
         </div>
