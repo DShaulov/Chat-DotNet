@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AP2_Chat_DotNet_WebAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20220509140115_init")]
+    [Migration("20220509183433_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

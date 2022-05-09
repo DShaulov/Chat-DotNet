@@ -4,7 +4,7 @@ namespace AP2_Chat_DotNet_WebAPI.Models
 {
     public class MyDbContext : DbContext
     {
-        private const string connectionString = "server=localhost;port=3306;database=AP2-Chat-DB;user=root;password=D0544";
+        private const string connectionString = "server=localhost;port=3306;database=DotNet-DB;user=root;password=D0544";
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(connectionString, MariaDbServerVersion.AutoDetect(connectionString));

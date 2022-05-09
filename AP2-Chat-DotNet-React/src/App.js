@@ -14,7 +14,7 @@ function App() {
     useEffect(() => {
         async function fetchContacts() {
             if (currentUser !== "" && token !== "") {
-                console.log(token);
+                var allContacts;
                 await fetch("/api/contacts", {
                     method: "GET",
                     headers: {
@@ -23,6 +23,16 @@ function App() {
                 })
                     .then(data => data.text())
                     .then(text => console.log(text));
+                // DELETE LATER //
+                await fetch("/api/contacts/frank" , {
+                    method: "GET",
+                    headers: {
+                        Authorization: "Bearer " + token
+                    },
+                })
+                    .then(data => data.text())
+                    .then(text => console.log(text))
+                
             }
         }
         fetchContacts();

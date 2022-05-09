@@ -36,7 +36,7 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
                     _configuration["JWTParams:Issuer"],
                     _configuration["JWTParams:Audience"],
                     claims,
-                    expires: DateTime.UtcNow.AddMinutes(60),
+                    expires: DateTime.UtcNow.AddDays(7),
                     signingCredentials: mac);
                 return Ok(new JwtSecurityTokenHandler().WriteToken(token));
             }
