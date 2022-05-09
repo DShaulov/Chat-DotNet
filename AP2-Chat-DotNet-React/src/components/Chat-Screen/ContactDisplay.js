@@ -23,6 +23,7 @@ function ContactDisplay(props) {
     function logOut() {
         props.functions.setLoggedIn(false);
         props.functions.setCurrentUser('');
+        props.functions.setToken('');
         navigate("/");
     }
     /**

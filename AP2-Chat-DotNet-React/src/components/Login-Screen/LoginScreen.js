@@ -13,7 +13,7 @@ function LoginScreen(props) {
      * If username or password fields are empty, displays error
      * If username and password dont match, displays error
      */
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         let username = e.target[0].value;
         let password = e.target[1].value;
@@ -35,7 +35,7 @@ function LoginScreen(props) {
         }
         var token;
         // Make POST request to server to login
-        fetch(`/userauth?username=${username}&password=${password}`, {
+        await fetch(`/userauth?username=${username}&password=${password}`, {
             method: "POST"
         })
             .then(data => data.text())

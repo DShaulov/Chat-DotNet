@@ -17,7 +17,7 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
             newUser.server = server;
             newUser.password = password;
             userModel.addUser(newUser);
-            return Ok();
+            return Ok("OK");
         }
     }
     [Route("api/[controller]")]

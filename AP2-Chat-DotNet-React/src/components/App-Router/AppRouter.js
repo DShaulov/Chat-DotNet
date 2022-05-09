@@ -26,12 +26,14 @@ function AppRouter(props) {
                     <Routes>
                         {   
                             loggedIn ?
-                            <Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
+                            //<Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
+                            <Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>:
                             <Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>
                         }
                         {
                             loggedIn ?
-                            <Route path="/register" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
+                            //<Route path="/register" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
+                            <Route path="/register" element={<RegisterScreen functions={registerFunctions}/>}/>:
                             <Route path="/register" element={<RegisterScreen functions={registerFunctions}/>}/>
                         
                         }

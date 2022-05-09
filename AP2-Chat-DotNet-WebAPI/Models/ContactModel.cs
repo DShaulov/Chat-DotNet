@@ -12,12 +12,12 @@
             }
         }
         // Get Item
-        public Contact getContact(string id)
+        public List<Contact>? getContacts(string id)
         {
             using (var db = new MyDbContext())
             {
-                Contact contact = db.Contacts.Find(id);
-                return contact;
+                List<Contact>? contacts = db.Contacts.Where(c => c.whose == id).ToList();
+                return contacts;
             }
         }
     }

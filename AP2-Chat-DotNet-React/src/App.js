@@ -7,40 +7,38 @@ import hardcodedUsers from './HardcodedUsers';
 
 function App() {
     const [currentUser, setCurrentUser] = useState("");
+    const [contacts, setContacts] = useState("");
     const [token, setToken] = useState("");
     const [users, updateUsers] = useState(hardcodedUsers);
     const [ messages, updateMessages ] = useState(hardcodedMessages);
-    /*useEffect(() => {
-        let allUsers = {};
-        fetchUsers(allUsers);
-        console.log(allUsers);
-        updateUsers(allUsers);
-    }, []);
-    function fetchUsers(allUsers) {
-        fetch("db/clientsideusers")
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(entry => {
-                allUsers[entry.username] = {
-                    password: entry.password,
-                    displayName: entry.displayName,
-                    profileImage: entry.profileImage,
-                    contacts: entry.contacts.split(",")
-                }
-            })
-        });
-    }*/
+    useEffect(() => {
+        async function fetchContacts() {
+            if (currentUser !== "" && token !== "") {
+                console.log(token);
+                await fetch("/api/contacts", {
+                    method: "GET",
+                    headers: {
+                        Authorization: "Bearer " + token
+                    },
+                })
+                    .then(data => data.text())
+                    .then(text => console.log(text));
+            }
+        }
+        fetchContacts();
+        
+    }, [token]);
     /**
      * Checks whether or not a username is already taken
      */
-    function isUsernameTaken(username) {
+    /*function isUsernameTaken(username) {
         for (const user of Object.keys(users)) {
             if (user === username) {
                 return true;
             }
         }
         return false;
-    };
+    };*/
     /**
      * TODO
      * Adds user to users database
@@ -66,14 +64,14 @@ function App() {
         setToken: setToken
     };
     const registerFunctions = {
-        isUsernameTaken: isUsernameTaken,
         setCurrentUser: setCurrentUser,
         setToken: setToken
     };
     const chatFunctions = {
         updateUsers: updateUsers,
         updateMessages: updateMessages,
-        setCurrentUser: setCurrentUser
+        setCurrentUser: setCurrentUser,
+        setToken: setToken
     }
     return (
         <AppRouter

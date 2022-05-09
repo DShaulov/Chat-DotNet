@@ -24,9 +24,6 @@ namespace AP2_Chat_DotNet_WebAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Userid")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<string>("id")
                         .HasColumnType("longtext");
 
@@ -42,9 +39,10 @@ namespace AP2_Chat_DotNet_WebAPI.Migrations
                     b.Property<string>("server")
                         .HasColumnType("longtext");
 
-                    b.HasKey("primaryKey");
+                    b.Property<string>("whose")
+                        .HasColumnType("longtext");
 
-                    b.HasIndex("Userid");
+                    b.HasKey("primaryKey");
 
                     b.ToTable("Contacts");
                 });
@@ -59,6 +57,12 @@ namespace AP2_Chat_DotNet_WebAPI.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("created")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("from")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("to")
                         .HasColumnType("longtext");
 
                     b.HasKey("id");
@@ -83,18 +87,6 @@ namespace AP2_Chat_DotNet_WebAPI.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("AP2_Chat_DotNet_WebAPI.Models.Contact", b =>
-                {
-                    b.HasOne("AP2_Chat_DotNet_WebAPI.Models.User", null)
-                        .WithMany("contacts")
-                        .HasForeignKey("Userid");
-                });
-
-            modelBuilder.Entity("AP2_Chat_DotNet_WebAPI.Models.User", b =>
-                {
-                    b.Navigation("contacts");
                 });
 #pragma warning restore 612, 618
         }

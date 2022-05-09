@@ -29,7 +29,7 @@ function RegisterScreen(props) {
     /**
      * Handles submission of register form 
      */
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         let username = e.target[0].value;
         let password = e.target[1].value;
@@ -80,21 +80,49 @@ function RegisterScreen(props) {
         else {
             if (passwordsDontMatch) {setPasswordsDontMatch(false)};
         }
-
-        if (isUsernameTaken(username)) {
+        var usernameTakenResponse;
+        await fetch(`/api/usertaken?id=${username}`, {
+            method: "POST"
+        })
+            .then(data => data.text())
+            .then(text => { usernameTakenResponse = text });
+        console.log(usernameTakenResponse);
+        if (usernameTakenResponse === "TAKEN") {
             setUsernameTaken(true);
             return;
         }
          else {
             if (usernameTaken) {setUsernameTaken(false)};
         }
-        // Make POST request to server to register
-        register(username, password, nickname);
-        logIn(username, password);
 
-        /*props.functions.setCurrentUser(username);
+        var registerResponse;
+        await fetch(`/api/userregister?id=${username}&password=${password}&name=${nickname}&server=${"localhost:7201"}`, {
+            method: "POST"
+        })
+            .then(data => data.text())
+            .then(text => { registerResponse = text; });
+        console.log(registerResponse);
+
+        var loginResponse;
+        await fetch(`/userauth?username=${username}&password=${password}`, {
+            method: "POST"
+        })
+            .then(data => data.text())
+            .then(text => { loginResponse = text });
+        console.log(loginResponse);
+
+        props.functions.setCurrentUser(username);
         props.functions.setLoggedIn(true);
-        props.functions.setToken(token);*/
+        props.functions.setToken(loginResponse);
+        
+
+        // Make POST request to server to register
+        //const loginResponse =  logIn(username, password);
+
+        
+
+
+        
 
 
         /*props.functions.setCurrentUser(username);
@@ -109,31 +137,25 @@ function RegisterScreen(props) {
         })
             .then(data => data.text())
             .then(text => { response = text });
-        if (response == "TAKEN") {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return response;
     }
     async function register(username, password, nickname) {
+        var response;
         await fetch(`/api/userregister?id=${username}&password=${password}&name=${nickname}&server=${"localhost:7201"}`, {
             method: "POST"
         })
             .then(data => data.text())
-            .then(text => {
-                if (text != "OK") {
-                    setFailedToRegister(true);
-                    return;
-                };
-            });
+            .then(text => { response = text; });
+        return response;
     }
-    async function logIn(username, password, token) {
+    async function logIn(username, password) {
+        var response;
         await fetch(`/userauth?username=${username}&password=${password}`, {
             method: "POST"
         })
             .then(data => data.text())
-            .then(text => { token = text });
+            .then(text => { response = text });
+        return response;
     }
     return (
         <div className="register-screen-div">
