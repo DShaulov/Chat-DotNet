@@ -1,0 +1,141 @@
+﻿using AP2_Chat_DotNet_WebAPI.Models;
+
+namespace AP2_Chat_DotNet_WebAPI.Services
+{
+    public class ContactService : IContactService
+    {
+        private static List<Contact>? contacts;
+        public ContactService()
+        {
+            contacts = populateContacts();
+        }
+        public void addContact(Contact contact)
+        {
+            contacts.Add(contact);
+        }
+        public List<Contact>? getContacts(string id)
+        {
+            List<Contact> userContacts = new List<Contact>();
+            contacts.ForEach(contact =>
+            {
+                if (contact.whose == id)
+                {
+                    userContacts.Add(contact);
+                }
+            });
+            return userContacts;
+        }
+        private List<Contact> populateContacts()
+        {
+            List<Contact> populatingContacts = new List<Contact>();
+
+            Contact frankOfCharlie = new Contact();
+            Contact frankOfDee = new Contact();
+
+            Contact dennisOfCharlie = new Contact();
+            Contact dennisOfMac = new Contact();
+
+            Contact macOfDee = new Contact();
+            Contact macOfDennis = new Contact();
+
+            Contact deeOfFrank = new Contact();
+            Contact deeOfMac = new Contact();
+
+            Contact charlieOfFrank = new Contact();
+            Contact charlieOfDennis = new Contact();
+
+
+            frankOfCharlie.name = "Frank";
+            frankOfCharlie.server = "localhost:3000";
+            frankOfCharlie.id = "frank";
+            frankOfCharlie.last = "Botched toe, thats a botched toe.";
+            frankOfCharlie.lastdate = "2022-04-24T08:00";
+            frankOfCharlie.whose = "charlie";
+
+            frankOfDee.name = "Frank";
+            frankOfDee.server = "localhost:3000";
+            frankOfDee.id = "frank";
+            frankOfDee.last = "Deandra will take care of me.";
+            frankOfDee.lastdate = "2022-04-24T08:02";
+            frankOfDee.whose = "dee";
+
+            dennisOfCharlie.name = "Dennis";
+            dennisOfCharlie.server = "localhost:3000";
+            dennisOfCharlie.id = "dennis";
+            dennisOfCharlie.last = "Ghouls dont exist.";
+            dennisOfCharlie.lastdate = "2022-04-24T16:00";
+            dennisOfCharlie.whose = "charlie";
+
+            dennisOfMac.name = "Dennis";
+            dennisOfMac.server = "localhost:3000";
+            dennisOfMac.id = "dennis";
+            dennisOfMac.last = "I have a dennis shaped hole inside of me.";
+            dennisOfMac.lastdate = "2022-04-24T16:00";
+            dennisOfMac.whose = "mac";
+
+            frankOfDee.name = "Frank";
+            frankOfDee.server = "localhost:3000";
+            frankOfDee.id = "frank";
+            frankOfDee.last = "Deandra will take care of me.";
+            frankOfDee.lastdate = "2022-04-24T08:02";
+            frankOfDee.whose = "dee";
+
+            macOfDee.name = "Mac";
+            macOfDee.server = "localhost:3000";
+            macOfDee.id = "mac";
+            macOfDee.last = "My elbows are massive.";
+            macOfDee.lastdate = "2022-04-24T07:04";
+            macOfDee.whose = "dee";
+
+            macOfDennis.name = "Mac";
+            macOfDennis.server = "localhost:3000";
+            macOfDennis.id = "mac";
+            macOfDennis.last = "I have a dennis shaped hole inside of me.";
+            macOfDennis.lastdate = "2022-04-24T07:04";
+            macOfDennis.whose = "dennis";
+
+            deeOfFrank.name = "Dee";
+            deeOfFrank.server = "localhost:3000";
+            deeOfFrank.id = "dee";
+            deeOfFrank.last = "Deandra will take care of me.";
+            deeOfFrank.lastdate = "2022-04-24T18:04";
+            deeOfFrank.whose = "frank";
+
+            deeOfMac.name = "Dee";
+            deeOfMac.server = "localhost:3000";
+            deeOfMac.id = "dee";
+            deeOfMac.last = "My elbows are massive.";
+            deeOfMac.lastdate = "2022-04-24T21:05";
+            deeOfMac.whose = "mac";
+
+            charlieOfDennis.name = "Charlie";
+            charlieOfDennis.server = "localhost:3000";
+            charlieOfDennis.id = "charlie";
+            charlieOfDennis.last = "Ghouls dont exist.";
+            charlieOfDennis.lastdate = "2022-04-24T19:04";
+            charlieOfDennis.whose = "dennis";
+
+            charlieOfFrank.name = "Charlie";
+            charlieOfFrank.server = "localhost:3000";
+            charlieOfFrank.id = "charlie";
+            charlieOfFrank.last = "Botched toe, thats a botched toe.";
+            charlieOfFrank.lastdate = "2022-04-24T15:34";
+            charlieOfFrank.whose = "frank";
+
+
+            populatingContacts.Add(frankOfCharlie);
+            populatingContacts.Add(frankOfDee);
+            populatingContacts.Add(charlieOfDennis);
+            populatingContacts.Add(charlieOfFrank);
+            populatingContacts.Add(dennisOfCharlie);
+            populatingContacts.Add(dennisOfMac);
+            populatingContacts.Add(deeOfMac);
+            populatingContacts.Add(deeOfFrank);
+            populatingContacts.Add(macOfDee);
+            populatingContacts.Add(macOfDennis);
+
+            return populatingContacts;
+        }
+
+    }
+}
