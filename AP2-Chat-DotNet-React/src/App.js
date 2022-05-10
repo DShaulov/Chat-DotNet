@@ -21,7 +21,7 @@ function App() {
                         Authorization: "Bearer " + token
                     },
                 })
-                    .then(data => data.text())
+                    .then(response => response.text())
                     .then(text => console.log(text));
                 // DELETE LATER //
                 await fetch("/api/contacts/frank" , {

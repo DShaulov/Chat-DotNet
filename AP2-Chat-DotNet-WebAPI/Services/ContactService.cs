@@ -13,7 +13,7 @@ namespace AP2_Chat_DotNet_WebAPI.Services
         {
             contacts.Add(contact);
         }
-        public List<Contact>? getContacts(string id)
+        public List<Contact> getContacts(string id)
         {
             List<Contact> userContacts = new List<Contact>();
             contacts.ForEach(contact =>
@@ -25,6 +25,57 @@ namespace AP2_Chat_DotNet_WebAPI.Services
             });
             return userContacts;
         }
+        public Contact? getContactById(string userId, string contactId)
+        {
+            List<Contact> userContacts = getContacts(userId);
+            for (int i = 0; i < userContacts.Count; i++)
+            {
+                if (userContacts[i].id == contactId)
+                {
+                    return userContacts[i];
+                }
+            }
+            return null;
+        }
+        public bool updateContactById(string userId,string contactId, string name = "", string server = "", string last = "", string lastdate = "")
+        {
+            Contact? contact = getContactById(userId, contactId);
+            if (contact != null)
+            {
+                if (name != "")
+                {
+                    contact.name = name;
+                }
+                if (server != "")
+                {
+                    contact.server = server;
+                }
+                if (last != "")
+                {
+                    contact.last = last;
+                }
+                if (lastdate != "")
+                {
+                    contact.lastdate = lastdate;
+                }
+                return true;
+            }
+            return false;
+        }
+        public bool removeContactById(string userId, string contactId)
+        {
+            Contact? contact = getContactById(userId, contactId);
+            if (contact != null)
+            {
+                contacts.Remove(contact);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private List<Contact> populateContacts()
         {
             List<Contact> populatingContacts = new List<Contact>();

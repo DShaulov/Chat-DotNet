@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AP2_Chat_DotNet_WebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
+using AP2_Chat_DotNet_WebAPI.Services;
 
 namespace AP2_Chat_DotNet_WebAPI.Controllers
 {
@@ -8,13 +9,17 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
     [Route("api/[controller]")]
     public class ContactsController : Controller
     {
+        private readonly IContactService contactService;
+        public ContactsController(IContactService service)
+        {
+            contactService = service;
+        }
         [Authorize]
         [HttpGet]
         public IActionResult GetAllContacts()
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
-            ContactModel contactModel = new ContactModel();
-            List<Contact>? allContacts = contactModel.getContacts(userId);
+            List<Contact>? allContacts = contactService.getContacts(userId);
             return Json(allContacts);
         }
         [Authorize]
@@ -22,7 +27,6 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
         public IActionResult AddContact(string id, string name, string server)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
-            ContactModel contactModel = new ContactModel();
             Contact newContact = new Contact();
             newContact.name = name;
             newContact.server = server;
@@ -30,7 +34,8 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
             newContact.last = null;
             newContact.lastdate = null;
             newContact.whose = userId;
-            return Ok("ok");
+            contactService.addContact(newContact);
+            return StatusCode(201);
         }
 
         [Authorize]
@@ -39,28 +44,47 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
         public IActionResult GetContactById(string id)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
-            ContactModel contactModel = new ContactModel();
-            List<Contact>? allContacts = contactModel.getContacts(userId);
-            Contact foundContact = new Contact();
-            bool contactFound = false;
-            allContacts.ForEach(contact =>
-            {
-                if (contact.id == id)
-                {
-                    foundContact = contact;
-                    contactFound = true;
-                }
-            });
-            if (contactFound)
+            Contact? foundContact = contactService.getContactById(userId, id);
+            if (foundContact != null)
             {
                 return Json(foundContact);
             }
             else
             {
-                return Json(new EmptyResult());
+                return StatusCode(404);
             }
-            
-
+        }
+        [Authorize]
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult UpdateContactById(string id)
+        {
+            string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
+            bool updateSuccesful = contactService.updateContactById(userId, id);
+            if (updateSuccesful)
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+        }
+        [Authorize]
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteContactById(string id)
+        {
+            string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
+            bool removeSuccesful = contactService.removeContactById(userId, id);
+            if (removeSuccesful)
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(404);
+            }
         }
 
     }

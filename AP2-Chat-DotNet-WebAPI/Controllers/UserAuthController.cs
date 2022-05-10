@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AP2_Chat_DotNet_WebAPI.Models;
 using System.Net;
+using AP2_Chat_DotNet_WebAPI.Services;
 
 namespace AP2_Chat_DotNet_WebAPI.Controllers
 {
@@ -14,9 +15,11 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
     public class UserAuthController : ControllerBase
     {
         public IConfiguration _configuration;
-        public UserAuthController(IConfiguration config)
+        private IUserService userService;
+        public UserAuthController(IConfiguration config, IUserService service)
         {
             _configuration = config;
+            userService = service;
         }
         [HttpPost]
         public IActionResult Post(string username, string password)
@@ -47,8 +50,7 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
 
             bool authUser(string username, string password)
             {
-                UserModel userModel = new UserModel();
-                User? user = userModel.getUser(username);
+                User? user = userService.getUser(username);
                 if (user != null)
                 {
                     if (user.password == password)
