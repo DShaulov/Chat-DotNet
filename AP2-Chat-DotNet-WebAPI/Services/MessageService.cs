@@ -55,19 +55,12 @@ namespace AP2_Chat_DotNet_WebAPI.Services
             }
             return null;
         }
-        public bool updateUserMessage(string userId, string contactId, int messageId, string content = "", string created = "")
+        public bool updateUserMessage(string userId, string contactId, int messageId, string content)
         {
             Message? userMessage = getUserMessageById(userId, contactId, messageId);
             if (userMessage != null)
             {
-                if (content != "")
-                {
-                    userMessage.content = content;
-                }
-                if (created != "")
-                {
-                    userMessage.created = created;
-                }
+                userMessage.content = content;
                 return true;
             }
             return false;

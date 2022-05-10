@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AP2_Chat_DotNet_WebAPI.Models;
+using AP2_Chat_DotNet_WebAPI.Services;
 
 
 namespace AP2_Chat_DotNet_WebAPI.Controllers
@@ -8,10 +9,16 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
     [Route("api/[controller]")]
     public class TransferController : Controller
     {
-        [HttpGet]
-        public string Get()
+        private readonly IMessageService messageService;
+        public TransferController(IMessageService service)
         {
-            return "Hello from transfer";
+            messageService = service;
+        }
+        [HttpPost]
+        public IActionResult RecieveMessage(string from, string to, string content)
+        {
+            messageService.addUserMessage(from, to, content);
+            return StatusCode(201);
         }
     }
 }

@@ -9,9 +9,16 @@ namespace AP2_Chat_DotNet_WebAPI.Services
         {
             contacts = populateContacts();
         }
-        public void addContact(Contact contact)
+        public void addContact(string userId, string contactId, string name, string server)
         {
-            contacts.Add(contact);
+            Contact newContact = new Contact();
+            newContact.name = name;
+            newContact.server = server;
+            newContact.id = contactId;
+            newContact.last = null;
+            newContact.lastdate = null;
+            newContact.whose = userId;
+            contacts.Add(newContact);
         }
         public List<Contact> getContacts(string id)
         {
@@ -37,27 +44,13 @@ namespace AP2_Chat_DotNet_WebAPI.Services
             }
             return null;
         }
-        public bool updateContactById(string userId,string contactId, string name = "", string server = "", string last = "", string lastdate = "")
+        public bool updateContactById(string userId,string contactId, string name, string server)
         {
             Contact? contact = getContactById(userId, contactId);
             if (contact != null)
             {
-                if (name != "")
-                {
-                    contact.name = name;
-                }
-                if (server != "")
-                {
-                    contact.server = server;
-                }
-                if (last != "")
-                {
-                    contact.last = last;
-                }
-                if (lastdate != "")
-                {
-                    contact.lastdate = lastdate;
-                }
+                contact.name = name;
+                contact.server = server;
                 return true;
             }
             return false;

@@ -14,21 +14,72 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
         {
             messageService = service;
         }
-        //[Authorize]
+        [Authorize]
         [HttpGet]
         public IActionResult GetMessages(string contactId)
         {
-            //string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
-            List<Message> messages = messageService.getUserMessages("mac", contactId);
+            string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
+            List<Message> messages = messageService.getUserMessages(userId, contactId);
             return Json(messages);
         }
+        [Authorize]
         [HttpPost]
         public IActionResult PostMessage(string contactId, string content)
         {
-            //string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
-            messageService.addUserMessage("mac", contactId, content);
+            string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
+            messageService.addUserMessage(userId, contactId, content);
             return Ok();
         }
-        
+        [Authorize]
+        [Route("{messageId}")]
+        [HttpGet]
+        public IActionResult GetMessageById(string contactId, int messageId)
+        {
+            string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
+            Message? message = messageService.getUserMessageById( userId, contactId, messageId);
+            if (message != null)
+            {
+                return Json(message);
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+        }
+        [Authorize]
+        [Route("{messageId}")]
+        [HttpPut]
+        public IActionResult UpdateMessageById(string contactId, int messageId, string content)
+        {
+            string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
+            bool updateSuccesful = messageService.updateUserMessage(userId, contactId, messageId, content);
+            if (updateSuccesful)
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+        }
+
+
+        [Authorize]
+        [Route("{messageId}")]
+        [HttpDelete]
+        public IActionResult RemoveMessageById(string contactId, int messageId)
+        {
+            string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
+            bool removeSuccesful = messageService.removeUserMessage(userId, contactId, messageId);
+            if (removeSuccesful)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+
+        }
     }
 }

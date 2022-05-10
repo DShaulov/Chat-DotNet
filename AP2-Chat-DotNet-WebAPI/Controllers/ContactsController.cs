@@ -27,14 +27,7 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
         public IActionResult AddContact(string id, string name, string server)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
-            Contact newContact = new Contact();
-            newContact.name = name;
-            newContact.server = server;
-            newContact.id = id;
-            newContact.last = null;
-            newContact.lastdate = null;
-            newContact.whose = userId;
-            contactService.addContact(newContact);
+            contactService.addContact(userId, id, name, server);
             return StatusCode(201);
         }
 
@@ -57,13 +50,13 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
         [Authorize]
         [HttpPut]
         [Route("{id}")]
-        public IActionResult UpdateContactById(string id)
+        public IActionResult UpdateContactById(string id, string name, string server)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
-            bool updateSuccesful = contactService.updateContactById(userId, id);
+            bool updateSuccesful = contactService.updateContactById(userId, id, name, server);
             if (updateSuccesful)
             {
-                return Ok();
+                return NoContent();
             }
             else
             {
@@ -79,7 +72,7 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
             bool removeSuccesful = contactService.removeContactById(userId, id);
             if (removeSuccesful)
             {
-                return Ok();
+                return NoContent();
             }
             else
             {
