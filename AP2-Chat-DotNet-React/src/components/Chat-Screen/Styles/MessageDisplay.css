@@ -138,6 +138,7 @@
 .list-card-div__time-div__time {
     margin-top: 2rem;
     display: flex;
+    white-space:nowrap;
 }
 .modal__form__add-btn-grp {
     margin-top: 4%;

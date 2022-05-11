@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AP2_Chat_DotNet_WebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using AP2_Chat_DotNet_WebAPI.Services;
 
@@ -20,6 +21,13 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
         {
             _configuration = config;
             userService = service;
+        }
+        [HttpPost]
+        [Route("getuser")]
+        public IActionResult getUser(string id)
+        {
+            User? user = userService.getUser(id);
+            return Ok(user);
         }
         [HttpPost]
         public IActionResult Post(string username, string password)
@@ -47,7 +55,6 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
             {
                 return Content("Invalid");
             }
-
             bool authUser(string username, string password)
             {
                 User? user = userService.getUser(username);
@@ -68,6 +75,5 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
                 }
             }
         }
-        
     }
 }

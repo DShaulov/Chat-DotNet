@@ -24,17 +24,17 @@ function AppRouter(props) {
                 <Navbar></Navbar>
                 <div className="App__content">
                     <Routes>
-                        {   
-                            loggedIn ?
-                            //<Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
-                            <Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>:
+                        {
+                            (loggedIn && props.finishedSettingMessages && props.finishedSettingContacts) ?
+                            <Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages} contacts={props.contacts} />} /> :
                             <Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>
+                            //<Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>
                         }
                         {
                             loggedIn ?
-                            //<Route path="/register" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages}/>}/> :
-                            <Route path="/register" element={<RegisterScreen functions={registerFunctions}/>}/>:
+                            <Route path="/register" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages} contacts={props.contacts}/>}/> :
                             <Route path="/register" element={<RegisterScreen functions={registerFunctions}/>}/>
+                            //<Route path="/register" element={<RegisterScreen functions={registerFunctions}/>}/>
                         
                         }
                     </Routes>

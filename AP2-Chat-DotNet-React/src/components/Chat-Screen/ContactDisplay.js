@@ -24,6 +24,8 @@ function ContactDisplay(props) {
         props.functions.setLoggedIn(false);
         props.functions.setCurrentUser('');
         props.functions.setToken('');
+        props.functions.setFinishedSettingMessages(false);
+        props.functions.setFinishedSettingContacts(false);
         navigate("/");
     }
     /**
@@ -42,18 +44,18 @@ function ContactDisplay(props) {
     function makeContactList() {
         let contactListItems = [];
         let id = 0;
-        let currentUserContacts = props.users[props.currentUser].contacts;
+        let currentUserContacts = props.contacts;
         for (const contact of currentUserContacts) {
             contactListItems.push(
-                <ListGroup.Item action="true" onClick={openChat} className="overflow-hidden" key={id} name={contact}>
+                <ListGroup.Item action="true" onClick={openChat} className="overflow-hidden" key={id} name={contact.id}>
                     <div className="list-card-div">
                         <div className="list-card-div__profile-image-div">
                             <img className="list-card-div__profile-image-div__img" 
-                            src={require(`../../userImages/${props.users[contact].profileImage}`)} alt=''></img>
+                            src={require(`../../userImages/default-user.png`)} alt=''></img>
                         </div>
                         <div className="list-card-div__contact-name-div">
                             <div className="list-card-div__contact-name-div__name-title-div">
-                                <h5 className="list-card-div__contact-name-div__name-title-div__name-title">{props.users[contact].displayName}</h5>
+                                <h5 className="list-card-div__contact-name-div__name-title-div__name-title">{props.contacts.name}</h5>
                             </div>
                             <div className="list-card-div__contact-name-div__last-message-div">
                                 <div className="last-message-div">
@@ -75,65 +77,36 @@ function ContactDisplay(props) {
      * Retrives the last message exchanged between users
      */
     function parseLastMessage(contact) {
-        let allMessages = props.messages[props.currentUser][contact];
-        if (allMessages.length !== 0) {
-            let lastMessage = allMessages[allMessages.length - 1];
-            if (lastMessage.type === 'IMG' || lastMessage.type === 'IMG-LOCAL') {
-                return (
-                    <>
-                        <CameraFill className="last-message-icon"/>
-                        <p className="last-message-paragraph">Image</p>
-                    </>
-                );
-            };
-            if (lastMessage.type === 'VIDEO' || lastMessage.type === 'VIDEO-LOCAL') {
-                return (
-                    <>
-                        <CameraVideoFill className="last-message-icon"/>
-                        <p className="last-message-paragraph">Video</p>
-                    </>
-                );
-            }
-            if (lastMessage.type === 'AUDIO' || lastMessage.type === 'AUDIO-LOCAL') {
-                return (
-                    <>
-                        <MicFill className="last-message-icon"/>
-                        <p className="last-message-paragraph">Recording</p>
-                    </>
-                );
-            }
-            return (
-                <p className="list-card-div__contact-name-div__last-message-div__last-message">{lastMessage.content}</p>
-            );
-        }
-        return '';
+        return (
+            <p className="list-card-div__contact-name-div__last-message-div__last-message">{contact.last}</p>
+        );
     }
     /**
      * Retries the time of the last message exchange
      */
     function parseLastMessageTime(contact) {
-        let allMessages = props.messages[props.currentUser][contact];
-        if (allMessages.length !== 0) {
-            let lastMessage = allMessages[allMessages.length - 1];
-            if (parseDate() !== lastMessage.date) {
-                return lastMessage.date;
-            }
-            return lastMessage.time;
+        let lastDateString = contact.lastdate;
+        let splitString = lastDateString.split("T");
+        let today = parseDate();
+        if (splitString[0] !== today) {
+            return splitString[0];
         }
-        return '';
+        else {
+            return splitString[1];
+        }
     }
     function parseDate() {
         let day = String(date.getDate()).padStart(2, '0');
         let month = String(date.getMonth() + 1).padStart(2, '0');
         let year = String(date.getFullYear());
-        return day + '/' + month + '/' + year;
+        return year + '-' + month + '-' + day;
     }
     /**
      * Checks if contact exists
      */
     function contactExists(contactUserName) {
-        for (const user in props.users) {
-            if (user === contactUserName) {
+        for (const contact in props.contacts) {
+            if (contact.id === contactUserName) {
                 return true;
             }
         }
@@ -172,8 +145,8 @@ function ContactDisplay(props) {
         <div className="Contact-Display-div">
             <Navbar className="custom-navbar" bg="light" variant="light">
                 <Container className="custom-navbar__image-brand-container">
-                    <Image src={require(`../../userImages/${props.users[props.currentUser].profileImage}`)} className="custom-navbar__image"></Image>
-                    <Navbar.Brand className="custom-navbar__brand"><h5>{props.users[props.currentUser].displayName}</h5></Navbar.Brand>
+                    <Image src={require(`../../userImages/default-user.png`)} className="custom-navbar__image"></Image>
+                    <Navbar.Brand className="custom-navbar__brand"><h5>{props.currentUser.name}</h5></Navbar.Brand>
                     <Dropdown drop={"start"}>
                         <DropdownToggle>Options</DropdownToggle>
                         <Dropdown.Menu>

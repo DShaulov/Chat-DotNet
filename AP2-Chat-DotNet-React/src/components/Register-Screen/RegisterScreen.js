@@ -101,7 +101,6 @@ function RegisterScreen(props) {
         })
             .then(data => data.text())
             .then(text => { registerResponse = text; });
-        console.log(registerResponse);
 
         var loginResponse;
         await fetch(`/userauth?username=${username}&password=${password}`, {
@@ -109,9 +108,14 @@ function RegisterScreen(props) {
         })
             .then(data => data.text())
             .then(text => { loginResponse = text });
-        console.log(loginResponse);
 
-        props.functions.setCurrentUser(username);
+        var userJson;
+        await fetch(`/userauth/getuser?id=${username}`, {
+            method: "POST"
+        })
+            .then(data => data.json())
+            .then(json => { userJson = json });
+        props.functions.setCurrentUser(userJson);
         props.functions.setLoggedIn(true);
         props.functions.setToken(loginResponse);
         

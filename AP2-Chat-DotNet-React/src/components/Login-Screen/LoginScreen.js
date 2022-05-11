@@ -44,7 +44,13 @@ function LoginScreen(props) {
             setUserNotValid(true);
         }
         else {
-            props.functions.setCurrentUser(username);
+            var userJson;
+            await fetch(`/userauth/getuser?id=${username}`, {
+                method: "POST"
+            })
+                .then(data => data.json())
+                .then(json => { userJson = json });
+            props.functions.setCurrentUser(userJson);
             props.functions.setLoggedIn(true);
             props.functions.setToken(token);
         }
