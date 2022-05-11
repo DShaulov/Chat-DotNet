@@ -86,14 +86,17 @@ function ContactDisplay(props) {
      */
     function parseLastMessageTime(contact) {
         let lastDateString = contact.lastdate;
-        let splitString = lastDateString.split("T");
-        let today = parseDate();
-        if (splitString[0] !== today) {
-            return splitString[0];
+        if (lastDateString !== null) {
+            let splitString = lastDateString.split("T");
+            let today = parseDate();
+            if (splitString[0].replace(/\s+/g, "") !== today.valueOf()) {
+                return splitString[0];
+            }
+            else {
+                return splitString[1];
+            }
         }
-        else {
-            return splitString[1];
-        }
+        
     }
     function parseDate() {
         let day = String(date.getDate()).padStart(2, '0');
@@ -102,39 +105,39 @@ function ContactDisplay(props) {
         return year + '-' + month + '-' + day;
     }
     /**
-     * Checks if contact exists
-     */
-    function contactExists(contactUserName) {
-        for (const contact in props.contacts) {
-            if (contact.id === contactUserName) {
-                return true;
-            }
-        }
-        return false;
-    };
-    /**
      * Adds contact if it exists
      */
-    function addContact(e) {
+    async function addContact(e) {
         e.preventDefault();
-        let username = e.target[0].value;
-        if (contactExists(username) && username !== props.currentUser) {
-            // Add to contacts
-            let updatedUsers = {...props.users};
-            if (!updatedUsers[props.currentUser].contacts.includes(username)) {
-                updatedUsers[props.currentUser].contacts.push(username);
+        let displayName = e.target[0].value;
+        let contactId = e.target[1].value;
+        let server = e.target[2].value;
+
+        let isMyServer = (server === "http://localhost:3000") || (server === "localhost:3000") || (server === "https://localhost:3000") || (server === "http://localhost:3000");
+        if (isMyServer) {
+            let contactExists;
+            console.log("CHECKING MY SERVER");
+            await fetch(`userauth/checkexists?id=${contactId}`, {
+                method: "POST"
+            })
+                .then(data => data.text())
+                .then(text => { contactExists = text });
+            if (contactExists === "EXISTS") {
+                await fetch(`/api/contacts?id=${contactId}&name=${displayName}&server=${server}`, {
+                    method: "POST",
+                    headers: {
+                        Authorization: "Bearer " + props.token
+                    },
+                })
+                    .then(data => data.text())
+                    .then(text => console.log(text));
             }
-            if (!updatedUsers[username].contacts.includes(props.currentUser)) {
-                updatedUsers[username].contacts.push(props.currentUser);
+            else {
+                setContactDoesNotExist(true);
             }
-            // Update messages
-            props.messages[props.currentUser][username] = [];
-            props.messages[username][props.currentUser] = [];
-            hideModal();
-            props.functions.updateUsers(updatedUsers);
         }
         else {
-            setContactDoesNotExist(true);
+
         }
     };
     function hideModal() {
@@ -169,7 +172,9 @@ function ContactDisplay(props) {
                     <Form onSubmit={addContact} className="modal__form">
                         <Form.Group >
                             <Form.Label>Contact:</Form.Label>
+                            <Form.Control placeholder="Enter contact nickname"></Form.Control>
                             <Form.Control placeholder="Enter contact username"></Form.Control>
+                            <Form.Control placeholder="Enter contact server"></Form.Control>
                             {contactDoesNotExist &&
                             <Form.Text className="warning-text">*Contact does not exist</Form.Text>
                             }
@@ -181,7 +186,6 @@ function ContactDisplay(props) {
                 </Modal.Body>
             </Modal>
         </div>
-        
     );
 };
 export default ContactDisplay;

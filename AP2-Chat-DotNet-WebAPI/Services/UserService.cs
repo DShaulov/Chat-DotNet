@@ -25,6 +25,18 @@ namespace AP2_Chat_DotNet_WebAPI.Services
             }
             return null;
         }
+        public bool checkIfUserExists(string id)
+        {
+            for (int i = 0; i < users.Count; i++)
+            {
+                if (users[i].id == id)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private List<User> populateUsers()
         {
             List<User> populatingUsers = new List<User>();

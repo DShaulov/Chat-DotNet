@@ -15,7 +15,7 @@ namespace AP2_Chat_DotNet_WebAPI.Services
             List<Message> userMessages = new List<Message>();
             messages.ForEach(message =>
             {
-                if ((message.from == userId && message.to == contactId && message.sent == true) ||(message.from == contactId && message.to == userId && message.sent == true))
+                if ((message.from == userId && message.to == contactId && message.sent == true) ||(message.from == contactId && message.to == userId && message.sent == false))
                 {
                     userMessages.Add(message);
                 }
@@ -24,12 +24,19 @@ namespace AP2_Chat_DotNet_WebAPI.Services
         }
         public void addUserMessage(string from, string to, string content)
         {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+            string time = DateTime.Now.ToString("HH:mm");
+            string dateTime = year + "-" + month + "-" + day + "T" + time;
+
+
             Message newMessage = new Message();
             newMessage.id = messageIdNum++;
             newMessage.from = from;
             newMessage.to = to;
             newMessage.content = content;
-            newMessage.created = DateTime.UtcNow.ToString();
+            newMessage.created = dateTime;
             newMessage.sent = true;
             messages.Add(newMessage);
 
@@ -38,7 +45,7 @@ namespace AP2_Chat_DotNet_WebAPI.Services
             newMessageForContact.from = from;
             newMessageForContact.to = to;
             newMessageForContact.content = content;
-            newMessageForContact.created = DateTime.UtcNow.ToString();
+            newMessageForContact.created = dateTime;
             newMessageForContact.sent = false;
             messages.Add(newMessageForContact);
 

@@ -8,6 +8,8 @@ namespace AP2_Chat_DotNet_WebAPI.Services
         public List<Contact>? getContacts(string id);
         public Contact? getContactById(string userId, string contactId);
         public bool updateContactById(string userId, string contactId, string name, string server);
+        public bool updateContactMessageById(string userId, string contactId, string last, string lastdate);
+
         public bool removeContactById(string userId, string contactId);
 
     }

@@ -6,6 +6,6 @@ namespace AP2_Chat_DotNet_WebAPI.Services
     {
         public void addUser(User user);
         public User? getUser(string id);
-
+        public bool checkIfUserExists(string id);
     }
 }

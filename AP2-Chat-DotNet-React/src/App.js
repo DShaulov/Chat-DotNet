@@ -58,7 +58,6 @@ function App() {
         else {
             notFirstRender.current = true;
         }
-        
     }, [token]);
 
     useEffect(() => {

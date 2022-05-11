@@ -10,9 +10,11 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
     public class MessagesController : Controller
     {
         private readonly IMessageService messageService;
-        public MessagesController(IMessageService service)
+        private readonly IContactService contactService;
+        public MessagesController(IMessageService service, IContactService cService)
         {
             messageService = service;
+            contactService = cService;
         }
         [Authorize]
         [HttpGet]
@@ -26,8 +28,16 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
         [HttpPost]
         public IActionResult PostMessage(string contactId, string content)
         {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+            string time = DateTime.Now.ToString("HH:mm");
+            string dateTime = year + "-" + month + "-" + day + "T" + time;
+
+
             string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
             messageService.addUserMessage(userId, contactId, content);
+            contactService.updateContactMessageById(userId, contactId, content, dateTime);
             return Ok();
         }
         [Authorize]

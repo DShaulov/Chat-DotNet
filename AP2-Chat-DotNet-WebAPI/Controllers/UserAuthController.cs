@@ -23,8 +23,22 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
             userService = service;
         }
         [HttpPost]
+        [Route("checkexists")]
+        public IActionResult CheckUserExists(string id)
+        {
+            if (userService.checkIfUserExists(id))
+            {
+                return Ok("EXISTS");
+            }
+            else
+            {
+                return Ok("DOESNT EXIST");
+            }
+        }
+
+        [HttpPost]
         [Route("getuser")]
-        public IActionResult getUser(string id)
+        public IActionResult GetUser(string id)
         {
             User? user = userService.getUser(id);
             return Ok(user);

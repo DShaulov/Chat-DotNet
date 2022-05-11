@@ -55,6 +55,17 @@ namespace AP2_Chat_DotNet_WebAPI.Services
             }
             return false;
         }
+        public bool updateContactMessageById(string userId, string contactId, string last, string lastdate)
+        {
+            Contact? contact = getContactById(userId, contactId);
+            if (contact != null)
+            {
+                contact.last = last;
+                contact.lastdate = lastdate;
+                return true;
+            }
+            return false;
+        }
         public bool removeContactById(string userId, string contactId)
         {
             Contact? contact = getContactById(userId, contactId);
