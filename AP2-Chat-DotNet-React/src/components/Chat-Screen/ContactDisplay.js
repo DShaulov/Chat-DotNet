@@ -36,7 +36,7 @@ function ContactDisplay(props) {
         while (parentElement.nodeName !== 'BUTTON') {
             parentElement = parentElement.parentNode;
         }
-        props.functions.openMessageDisplay(parentElement.name);
+        props.functions.openMessageDisplay(parentElement.id ,parentElement.name);
     }
     /**
      * Creates the list items making up the contact list
@@ -47,7 +47,7 @@ function ContactDisplay(props) {
         let currentUserContacts = props.contacts;
         for (const contact of currentUserContacts) {
             contactListItems.push(
-                <ListGroup.Item action="true" onClick={openChat} className="overflow-hidden" key={id} name={contact.id}>
+                <ListGroup.Item action="true" onClick={openChat} className="overflow-hidden" key={id} name={contact.name} id={contact.id}>
                     <div className="list-card-div">
                         <div className="list-card-div__profile-image-div">
                             <img className="list-card-div__profile-image-div__img" 
@@ -55,7 +55,7 @@ function ContactDisplay(props) {
                         </div>
                         <div className="list-card-div__contact-name-div">
                             <div className="list-card-div__contact-name-div__name-title-div">
-                                <h5 className="list-card-div__contact-name-div__name-title-div__name-title">{props.contacts.name}</h5>
+                                <h5 className="list-card-div__contact-name-div__name-title-div__name-title">{ contact.name }</h5>
                             </div>
                             <div className="list-card-div__contact-name-div__last-message-div">
                                 <div className="last-message-div">

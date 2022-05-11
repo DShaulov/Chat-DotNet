@@ -66,30 +66,9 @@ function MessageDisplay(props) {
     function buildMessages() {
         let messageId = 0;
         let messageList = [];
-        console.log(props.messages[props.currentUser][props.userChattingWith]);
-        for (const message of props.messages[props.currentUser][props.userChattingWith]) {
-            if (message.type === 'TEXT') {
+        for (const message of props.messages[props.userChattingWithId]) {
                 buildTextMessage(message, messageList, messageId);
-            }
-            else if (message.type === 'IMG') {
-                buildImgMessage(message, messageList, messageId, false);
-            }
-            else if (message.type === 'IMG-LOCAL') {
-                buildImgMessage(message, messageList, messageId, true);
-            }
-            else if (message.type === 'VIDEO') {
-                buildVideoMessage(message, messageList, messageId, false);
-            }
-            else if (message.type === 'VIDEO-LOCAL') {
-                buildVideoMessage(message, messageList, messageId, true);
-            }
-            else if (message.type === 'AUDIO') {
-                buildAudioMessage(message, messageList, messageId, false);
-            }
-            else if (message.type === 'AUDIO-LOCAL') {
-                buildAudioMessage(message, messageList, messageId, true);
-            }
-            messageId++;
+                messageId++;
         }
         return messageList;
     }
@@ -98,12 +77,14 @@ function MessageDisplay(props) {
      */
     function buildTextMessage(message ,messageList, messageId) {
         let className = '';
-        if (message.direction === 'TO') {
+        var timeCreated = message.created;
+        var dateTimeArray = timeCreated.split("T");
+        if (message.sent === true) {
             className = 'chat-bubble-to';
             messageList.push(
                 <div className="chat-bubble-container" key={messageId}>
-                    <time className="to-message-timestamp">{message.time}</time>
-                    <time className="to-message-datestamp">{message.date}</time>
+                    <time className="to-message-timestamp">{dateTimeArray[1]}</time>
+                    <time className="to-message-datestamp">{dateTimeArray[0]}</time>
                     <div className={className} >
                         <p className="text-message-paragraph">{message.content}</p>
                     </div>
@@ -117,8 +98,8 @@ function MessageDisplay(props) {
                     <div className={className}>
                         <p className="text-message-paragraph">{message.content}</p>
                     </div>
-                    <time className="from-message-timestamp">{message.time}</time>
-                    <time className="from-message-datestamp">{message.date}</time>
+                    <time className="from-message-timestamp">{dateTimeArray[1]}</time>
+                    <time className="from-message-datestamp">{dateTimeArray[0]}</time>
                 </div>
             )
         }
@@ -424,8 +405,8 @@ function MessageDisplay(props) {
     return (
         <div className="MessageDisplay">
             <Navbar className="custom-navbar" variant="light" bg="light">
-                <Image src={require(`../../userImages/${props.users[props.userChattingWith].profileImage}`)} className="custom-navbar__contact-image"></Image>
-                <Navbar.Brand className="custom-navbar__contact-brand"><h5>{props.users[props.userChattingWith].displayName}</h5></Navbar.Brand>
+                <Image src={require(`../../userImages/default-user.png`)} className="custom-navbar__contact-image"></Image>
+                <Navbar.Brand className="custom-navbar__contact-brand"><h5>{props.userChattingWith}</h5></Navbar.Brand>
                 <p className="spacer">a</p>
             </Navbar>
             <div className="messages-div">

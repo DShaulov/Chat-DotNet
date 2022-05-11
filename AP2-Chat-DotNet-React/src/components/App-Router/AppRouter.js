@@ -25,14 +25,14 @@ function AppRouter(props) {
                 <div className="App__content">
                     <Routes>
                         {
-                            (loggedIn && props.finishedSettingMessages && props.finishedSettingContacts) ?
-                            <Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages} contacts={props.contacts} />} /> :
+                            (loggedIn && props.finishedSettingContacts) ?
+                                <Route path="/" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} contacts={props.contacts} messages={props.messages} token={props.token} />} /> :
                             <Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>
                             //<Route path="/" element={<LoginScreen functions={loginFunctions}/>}/>
                         }
                         {
                             loggedIn ?
-                            <Route path="/register" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} users={props.users} messages={props.messages} contacts={props.contacts}/>}/> :
+                            <Route path="/register" element={<ChatScreen functions={chatFunctions} currentUser={props.currentUser} contacts={props.contacts} messages={props.messages} token={props.token}/>}/> :
                             <Route path="/register" element={<RegisterScreen functions={registerFunctions}/>}/>
                             //<Route path="/register" element={<RegisterScreen functions={registerFunctions}/>}/>
                         
