@@ -2,7 +2,7 @@
 
 const context = [
     "/api",
-    "/db",
+    "/hub",
     "/userauth",
 ];
 

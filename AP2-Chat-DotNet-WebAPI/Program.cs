@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using AP2_Chat_DotNet_WebAPI.Services;
+using AP2_Chat_DotNet_WebAPI.Hubs;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IContactService, ContactService>();
 builder.Services.AddSingleton<IMessageService, MessageService>();
-
+builder.Services.AddSignalR();
 
 
 
@@ -37,9 +39,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy("Allow All",
         builder =>
         {
-            builder.AllowAnyOrigin()
+            builder.AllowAnyHeader()
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .WithOrigins("https://localhost:3000")
+            .AllowCredentials();
         });
 
 });
@@ -53,10 +56,16 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
 app.UseCors("Allow All");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<AppHub>("/hub");
+});
 
 app.Run();

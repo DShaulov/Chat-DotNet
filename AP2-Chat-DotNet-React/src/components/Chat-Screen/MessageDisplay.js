@@ -22,7 +22,10 @@ function MessageDisplay(props) {
                 Authorization: "Bearer " + props.token
             },
         });
-        
+        event.target[0].value = "";
+        await fetch(`api/hub/update`, {
+            method: "POST",
+        });
     };
     /**
      * Returns current date in dd/mm/yy format

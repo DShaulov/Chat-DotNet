@@ -38,6 +38,7 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
             string userId = User.Claims.FirstOrDefault(c => c.Type.Equals("UserId", StringComparison.InvariantCultureIgnoreCase)).Value;
             messageService.addUserMessage(userId, contactId, content);
             contactService.updateContactMessageById(userId, contactId, content, dateTime);
+            contactService.updateContactMessageById(contactId, userId, content, dateTime);
             return Ok();
         }
         [Authorize]

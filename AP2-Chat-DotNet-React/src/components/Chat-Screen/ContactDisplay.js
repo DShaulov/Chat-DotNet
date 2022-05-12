@@ -113,6 +113,13 @@ function ContactDisplay(props) {
         let contactId = e.target[1].value;
         let server = e.target[2].value;
 
+        for (const contact of props.contacts) {
+            if (contact.id === contactId) {
+                setShowAddContactPopup(false);
+                return;
+            }
+        }
+
         let isMyServer = (server === "http://localhost:3000") || (server === "localhost:3000") || (server === "https://localhost:3000") || (server === "http://localhost:3000");
         if (isMyServer) {
             let contactExists;
@@ -131,6 +138,10 @@ function ContactDisplay(props) {
                 })
                     .then(data => data.text())
                     .then(text => console.log(text));
+                await fetch(`api/hub/update`, {
+                    method: "POST",
+                });
+                setShowAddContactPopup(false);
             }
             else {
                 setContactDoesNotExist(true);
