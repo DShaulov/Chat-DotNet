@@ -17,7 +17,7 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
         [HttpPost]
         public IActionResult RecieveMessage(string from, string to, string content)
         {
-            messageService.addUserMessage(from, to, content);
+            messageService.addTransferMessage(from, to, content);
             return StatusCode(201);
         }
     }

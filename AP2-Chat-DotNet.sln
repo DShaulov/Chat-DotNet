@@ -7,11 +7,12 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "AP2-Chat-DotNet-React", "AP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AP2-Chat-DotNet-WebAPI", "AP2-Chat-DotNet-WebAPI\AP2-Chat-DotNet-WebAPI.csproj", "{064F8CC1-1E88-4726-9254-28E5C4DF685B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AP2-Chat-Dotnet-Rank", "AP2-Chat-Dotnet-Rank\AP2-Chat-Dotnet-Rank.csproj", "{269C031D-621B-43A2-97EA-23A23B998286}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AP2-Chat-Dotnet-Rank", "AP2-Chat-Dotnet-Rank\AP2-Chat-Dotnet-Rank.csproj", "{269C031D-621B-43A2-97EA-23A23B998286}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D1C6B164-3BCE-4754-AD98-B65359246B40}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global

@@ -112,6 +112,7 @@ function ContactDisplay(props) {
         let displayName = e.target[0].value;
         let contactId = e.target[1].value;
         let server = e.target[2].value;
+        let myServer = "localhost:3000";
 
         for (const contact of props.contacts) {
             if (contact.id === contactId) {
@@ -123,14 +124,13 @@ function ContactDisplay(props) {
         let isMyServer = (server === "http://localhost:3000") || (server === "localhost:3000") || (server === "https://localhost:3000") || (server === "http://localhost:3000");
         if (isMyServer) {
             let contactExists;
-            console.log("CHECKING MY SERVER");
             await fetch(`userauth/checkexists?id=${contactId}`, {
                 method: "POST"
             })
                 .then(data => data.text())
                 .then(text => { contactExists = text });
             if (contactExists === "EXISTS") {
-                await fetch(`/api/contacts?id=${contactId}&name=${displayName}&server=${server}`, {
+                await fetch(`/api/contacts?id=${contactId}&name=${displayName}&server=${myServer}`, {
                     method: "POST",
                     headers: {
                         Authorization: "Bearer " + props.token
@@ -138,6 +138,9 @@ function ContactDisplay(props) {
                 })
                     .then(data => data.text())
                     .then(text => console.log(text));
+                await fetch(`/api/invitations?from=${props.currentUser}&to=${contactId}&server=${myServer}`, {
+                    method: "POST",
+                })
                 await fetch(`api/hub/update`, {
                     method: "POST",
                 });
@@ -148,7 +151,24 @@ function ContactDisplay(props) {
             }
         }
         else {
-
+            await fetch(`/api/contacts?id=${contactId}&name=${displayName}&server=${myServer}`, {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + props.token
+                },
+            })
+                .then(data => data.text())
+                .then(text => console.log(text));
+            await fetch(server + `/api/invitations?from=${props.currentUser}&to=${contactId}&server=${myServer}`, {
+                method: "POST",
+                headers: {
+                    Authorization: "Bearer " + props.token
+                },
+            })
+            await fetch(`api/hub/update`, {
+                method: "POST",
+            });
+            setShowAddContactPopup(false);
         }
     };
     function hideModal() {

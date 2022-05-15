@@ -24,12 +24,8 @@ namespace AP2_Chat_DotNet_WebAPI.Services
         }
         public void addUserMessage(string from, string to, string content)
         {
-            string year = DateTime.Now.ToString("yyyy");
-            string month = DateTime.Now.ToString("MM");
-            string day = DateTime.Now.ToString("dd");
-            string time = DateTime.Now.ToString("HH:mm");
-            string dateTime = year + "-" + month + "-" + day + "T" + time;
 
+            string dateTime = getDateTime();
 
             Message newMessage = new Message();
             newMessage.id = messageIdNum++;
@@ -40,6 +36,12 @@ namespace AP2_Chat_DotNet_WebAPI.Services
             newMessage.sent = true;
             messages.Add(newMessage);
 
+            /*addTransferMessage(to, from, content);*/
+        }
+        public void addTransferMessage(string from, string to, string content)
+        {
+            string dateTime = getDateTime();
+
             Message newMessageForContact = new Message();
             newMessageForContact.id = messageIdNum++;
             newMessageForContact.from = from;
@@ -48,7 +50,6 @@ namespace AP2_Chat_DotNet_WebAPI.Services
             newMessageForContact.created = dateTime;
             newMessageForContact.sent = false;
             messages.Add(newMessageForContact);
-
         }
         public Message? getUserMessageById(string userId, string contactId ,int id)
         {
@@ -81,6 +82,16 @@ namespace AP2_Chat_DotNet_WebAPI.Services
                 return true;
             }
             return false;
+        }
+        public string getDateTime()
+        {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+            string time = DateTime.Now.ToString("HH:mm");
+            string dateTime = year + "-" + month + "-" + day + "T" + time;
+
+            return dateTime;
         }
         private List<Message> populateMessages()
         {

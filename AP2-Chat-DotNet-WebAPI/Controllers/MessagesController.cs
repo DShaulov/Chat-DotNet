@@ -39,7 +39,7 @@ namespace AP2_Chat_DotNet_WebAPI.Controllers
             messageService.addUserMessage(userId, contactId, content);
             contactService.updateContactMessageById(userId, contactId, content, dateTime);
             contactService.updateContactMessageById(contactId, userId, content, dateTime);
-            return Ok();
+            return StatusCode(201);
         }
         [Authorize]
         [Route("{messageId}")]

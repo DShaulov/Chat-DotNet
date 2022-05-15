@@ -15,6 +15,8 @@ function MessageDisplay(props) {
      */
     async function sendTextMessage(event) {
         event.preventDefault();
+        let server = retrieveContactServer(props.userChattingWithId);
+        let isMyServer = (server === "http://localhost:3000") || (server === "localhost:3000") || (server === "https://localhost:3000") || (server === "http://localhost:3000");
         let content = event.target[0].value;
         await fetch(`api/contacts/${props.userChattingWithId}/messages?content=${content}`, {
             method: "POST",
@@ -22,11 +24,32 @@ function MessageDisplay(props) {
                 Authorization: "Bearer " + props.token
             },
         });
+
+        if (isMyServer) {
+            await fetch(`api/transfer?from=${props.currentUser.id}&to=${props.userChattingWithId}&content=${content}`, {
+                method: "POST",
+            });
+        }
+        else {
+            await fetch(server + `/api/transfer?from=${props.currentUser}&to=${props.userChattingWithId}&content=${content}`, {
+                method: "POST",
+            });
+        }
+
         event.target[0].value = "";
         await fetch(`api/hub/update`, {
             method: "POST",
         });
     };
+    function retrieveContactServer(contactId) {
+        let server = "";
+        props.contacts.forEach(contact => {
+            if (contact.id === contactId) {
+                server = contact.server;
+            }
+        })
+        return server;
+    }
     /**
      * Returns current date in dd/mm/yy format
      */
