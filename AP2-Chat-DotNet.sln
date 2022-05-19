@@ -7,8 +7,6 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "AP2-Chat-DotNet-React", "AP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AP2-Chat-DotNet-WebAPI", "AP2-Chat-DotNet-WebAPI\AP2-Chat-DotNet-WebAPI.csproj", "{064F8CC1-1E88-4726-9254-28E5C4DF685B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AP2-Chat-Dotnet-Rank", "AP2-Chat-Dotnet-Rank\AP2-Chat-Dotnet-Rank.csproj", "{269C031D-621B-43A2-97EA-23A23B998286}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D1C6B164-3BCE-4754-AD98-B65359246B40}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -31,10 +29,6 @@ Global
 		{064F8CC1-1E88-4726-9254-28E5C4DF685B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{064F8CC1-1E88-4726-9254-28E5C4DF685B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{064F8CC1-1E88-4726-9254-28E5C4DF685B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{269C031D-621B-43A2-97EA-23A23B998286}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{269C031D-621B-43A2-97EA-23A23B998286}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{269C031D-621B-43A2-97EA-23A23B998286}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{269C031D-621B-43A2-97EA-23A23B998286}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
