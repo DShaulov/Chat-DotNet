@@ -12,6 +12,7 @@ Consists of 2 projects:
 2) AP2-Chat-DotNet-WebAPI
 
 
+
 AP2-Chat-DotNet-WebAPI and AP2-Chat-DotNet-React must run together in order to function properly.
 
 ** The WebAPI and React projects must run on the ports specified in their configuration files in order for singalR to work:
